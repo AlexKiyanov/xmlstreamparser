@@ -1,6 +1,6 @@
 package ru.kiianov.xmlstreamparser.dao;
 
-import ru.kiianov.xmlstreamparser.dao.exception.DataBaseRuntimeException;
+import ru.kiianov.xmlstreamparser.dao.exception.DBRuntimeException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +13,7 @@ public class DBConnector {
     private final String password;
 
     public DBConnector(String fileConfigName) {
-        ResourceBundle resource = ResourceBundle.getBundle(fileConfigName);
+        final ResourceBundle resource = ResourceBundle.getBundle(fileConfigName);
         this.url = resource.getString("db.url");
         this.user = resource.getString("db.user");
         this.password = resource.getString("db.password");
@@ -23,7 +23,7 @@ public class DBConnector {
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            throw new DataBaseRuntimeException("Connection wasn't created", e);
+            throw new DBRuntimeException("Connection wasn't created", e);
         }
     }
 }

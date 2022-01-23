@@ -118,12 +118,9 @@
                 <version>${jacoco.version}</version>
                 <configuration>
                     <excludes>
-                        <exclude>
-                            ru/kiianov/xmlstreamparser/XmlParserRunner.class
-                        </exclude>
-                        <exclude>
-                            ru/kiianov/xmlstreamparser/dao/entity/*.*
-                        </exclude>
+                        <exclude>ru/kiianov/xmlstreamparser/XmlParserRunner.class</exclude>
+                        <exclude>ru/kiianov/xmlstreamparser/dao/entity/*.*</exclude>
+                        <exclude>**/*DB*.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

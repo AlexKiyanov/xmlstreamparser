@@ -2,7 +2,7 @@ package ru.kiianov.xmlstreamparser.dao.impl;
 
 import ru.kiianov.xmlstreamparser.dao.CrudDao;
 import ru.kiianov.xmlstreamparser.dao.DBConnector;
-import ru.kiianov.xmlstreamparser.dao.exception.DataBaseRuntimeException;
+import ru.kiianov.xmlstreamparser.dao.exception.DBRuntimeException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
                 try {
                     pr.setString(1, s);
                 } catch (SQLException e) {
-                    throw new DataBaseRuntimeException(e);
+                    throw new DBRuntimeException(e);
                 }
             };
 
@@ -30,7 +30,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
                 try {
                     pr.setLong(1, param);
                 } catch (SQLException e) {
-                    throw new DataBaseRuntimeException(e);
+                    throw new DBRuntimeException(e);
                 }
             };
 
@@ -65,11 +65,11 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
             insert(preparedStatement, entity);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataBaseRuntimeException("Insertion is failed", e);
+            throw new DBRuntimeException("Insertion is failed", e);
         }
     }
 
-    public void save(List<E> entities) {
+    public void save(Set<E> entities) {
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(saveQuery)) {
             connection.setAutoCommit(false);
@@ -81,7 +81,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            throw new DataBaseRuntimeException("Insertion is failed", e);
+            throw new DBRuntimeException("Insertion is failed", e);
         }
     }
 
@@ -105,7 +105,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
                 return entities;
             }
         } catch (SQLException e) {
-            throw new DataBaseRuntimeException(e);
+            throw new DBRuntimeException(e);
         }
     }
 
@@ -117,7 +117,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataBaseRuntimeException(e);
+            throw new DBRuntimeException(e);
         }
     }
 
@@ -128,7 +128,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataBaseRuntimeException(e);
+            throw new DBRuntimeException(e);
         }
     }
 
@@ -162,7 +162,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E, Long> {
                 return Optional.empty();
             }
         } catch (SQLException e) {
-            throw new DataBaseRuntimeException(e);
+            throw new DBRuntimeException(e);
         }
     }
 }
